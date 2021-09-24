@@ -5,7 +5,7 @@ class NewsController {
     }
     //[GET] /news/:slug
     show(req, res) {
-        res.send('Truong Dep Trai');
+        res.send('T');
     }
 }
 
