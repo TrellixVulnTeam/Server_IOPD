@@ -29,14 +29,15 @@ class AuthController {
                 })
             })
     }
-    //[POST] /buyer/signin
+    //[POST] /admin/signin
     signin(req, res, next) {
         User.findOne({ email: req.body.email })
             .exec( async (error, user) => {
                 if (error) return res.status(400).json({ error })
                 if (user) {
-                    const isPassword = await user.authenticate(req.body.password);
-                    if (isPassword && user.role === 'admin') {
+                    const isPassword =  user.authenticate(req.body.password)
+                    console.log({isPassword})
+                    if (isPassword && user.role === "admin") {
                         const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' })
                         const { firstName, lastName, email, role, fullName } = user;
                         res.cookie('token', token, { expiresIn: '1y' })

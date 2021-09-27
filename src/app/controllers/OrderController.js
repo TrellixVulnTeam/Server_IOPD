@@ -42,7 +42,7 @@ class OrderController{
       getOrders = (req, res) => {
         Order.find({ user: req.user._id })
           .select("_id paymentStatus paymentType orderStatus items")
-          .populate("items.productId", "_id name productPictures")
+          .populate("items.productId", "_id name productPicture")
           .exec((error, orders) => {
             if (error) return res.status(400).json({ error });
             if (orders) {
@@ -53,7 +53,7 @@ class OrderController{
       
       getOrder = (req, res) => {
         Order.findOne({ _id: req.body.orderId })
-          .populate("items.productId", "_id name productPictures")
+          .populate("items.productId", "_id name productPicture")
           .lean()
           .exec((error, order) => {
             if (error) return res.status(400).json({ error });
